@@ -102,12 +102,22 @@ int main(void)
     BOARD_InitDebugConsole();
 
     /* Define the init structure for the output LED pin*/
+    gpio_pin_config_t DIO0_config = {
+        kGPIO_DigitalInput
+    };
+
     gpio_pin_config_t led_config = {
         kGPIO_DigitalOutput, 0,
     };
+
     GPIO_PortInit(GPIO, BOARD_LED_PORT);
+    GPIO_PortInit(GPIO, 0U);
+
+    GPIO_PinInit(GPIO, 0, 15, &led_config);
+    GPIO_PinInit(GPIO, 1, 9, &DIO0_config);
     GPIO_PinInit(GPIO, BOARD_LED_PORT, BOARD_LED_PIN, &led_config);
     GPIO_PinWrite(GPIO,1,4,false);
+
     PRINTF("Master Start...\n\r");
     /*
      * userConfig.enableLoopback = false;
@@ -128,6 +138,7 @@ int main(void)
     	while(true);
     }
 	PRINTF("SX1276 or RFM95 detected and configured\n\r");
+
     GPIO_PinWrite(GPIO,1,4,true);
 
     uint16_t temp;
@@ -156,6 +167,7 @@ int main(void)
 
 uint8_t RFM_Read(uint8_t addr) {
 
+	GPIO_PinWrite(GPIO,0,15,false);
 	spi_transfer_t xfer = {0};
 	uint8_t xBuff[2];
 	uint8_t destBuff[2];
@@ -169,6 +181,8 @@ uint8_t RFM_Read(uint8_t addr) {
 	xfer.dataSize = 2;
 
 	SPI_MasterTransferBlocking(SPI8, &xfer);
+
+	GPIO_PinWrite(GPIO,0,15,true);
 	//PRINTF("Rx Data= %d",destBuff[1]);
     //RFM_NSS(1);
     return destBuff[1];
@@ -178,6 +192,7 @@ uint8_t RFM_Read(uint8_t addr) {
 
 void RFM_Write(uint8_t RFM_Address, uint8_t RFM_Data){
 	//RFM_NSS(0);
+	GPIO_PinWrite(GPIO,0,15,false);
 	spi_transfer_t xfer = {0};
 	uint8_t xBuff[2];
 	uint8_t destBuff[2];
@@ -191,6 +206,7 @@ void RFM_Write(uint8_t RFM_Address, uint8_t RFM_Data){
 	xfer.dataSize = 2;
 	SPI_MasterTransferBlocking(SPI8, &xfer);
 
+	GPIO_PinWrite(GPIO,0,15,true);
 	//RFM_NSS(1);
 	//digitalWrite(NSS,HIGH);
 }
@@ -385,9 +401,9 @@ void RFM_Send_Package(unsigned char *RFM_Tx_Package, unsigned char Package_Lengt
   // 904.400 Mhz / 61.035 Hz = 14866880 = 0xE2D9C0
   // 912.500 Mhz / 61.035 Hz = 14950438 = 0xE42026
   // 902.300 Mhz / 61.035 Hz = 14783321 = 0xE19359
-  RFM_Write(0x06,0xE1);
-  RFM_Write(0x07,0x93);
-  RFM_Write(0x08,0x59);
+  RFM_Write(0x06,0xE2);
+  RFM_Write(0x07,0xD9);
+  RFM_Write(0x08,0xC0);
 
   //SF7 BW 125 kHz
   RFM_Write(0x1E,0x74); //SF7 CRC On
@@ -418,7 +434,12 @@ void RFM_Send_Package(unsigned char *RFM_Tx_Package, unsigned char Package_Lengt
   //Switch RFM to Tx
   RFM_Write(0x01,0x83);
 
+  while(GPIO_PinRead(GPIO,1,9)==0){
+	 PRINTF(".");
+  }
   /*
+   *
+   *
   //Wait for TxDone
   while(digitalRead(DIO0) == LOW){
   }*/

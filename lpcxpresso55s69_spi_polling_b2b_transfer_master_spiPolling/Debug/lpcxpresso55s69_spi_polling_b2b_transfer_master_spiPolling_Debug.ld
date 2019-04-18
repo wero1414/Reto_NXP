@@ -6,7 +6,7 @@
  * Generated linker script file for LPC55S69
  * Created from linkscript.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.23
- * MCUXpresso IDE v10.3.1 [Build 2233] [2019-02-20] on 15-abr-2019 22:00:36
+ * MCUXpresso IDE v10.3.1 [Build 2233] [2019-02-20] on 18-abr-2019 14:51:27
  */
 
 INCLUDE "lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling_Debug_library.ld"

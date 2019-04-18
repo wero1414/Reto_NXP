@@ -81,6 +81,36 @@ void BOARD_InitPins(void)
     /* Enables the clock for the I/O controller.: Enable Clock. */
     CLOCK_EnableClock(kCLOCK_Iocon);
 
+    const uint32_t port1_pin9_config = (/* Pin is configured as PIO1_4 */
+                                        IOCON_PIO_FUNC0 |
+                                        /* Selects pull-up function */
+                                        IOCON_PIO_MODE_PULLUP |
+                                        /* Standard mode, output slew rate control is enabled */
+                                        IOCON_PIO_SLEW_STANDARD |
+                                        /* Input function is not inverted */
+                                        IOCON_PIO_INV_DI |
+                                        /* Enables digital function */
+                                        IOCON_PIO_DIGITAL_EN |
+                                        /* Open drain is disabled */
+                                        IOCON_PIO_OPENDRAIN_DI);
+    /* PORT1 PIN4 (coords: 1) is configured as PIO1_4 */
+    IOCON_PinMuxSet(IOCON, 1U, 9U, port1_pin9_config);
+
+    const uint32_t port0_pin15_config = (/* Pin is configured as PIO1_4 */
+                                        IOCON_PIO_FUNC0 |
+                                        /* Selects pull-up function */
+                                        IOCON_PIO_MODE_PULLUP |
+                                        /* Standard mode, output slew rate control is enabled */
+                                        IOCON_PIO_SLEW_STANDARD |
+                                        /* Input function is not inverted */
+                                        IOCON_PIO_INV_DI |
+                                        /* Enables digital function */
+                                        IOCON_PIO_DIGITAL_EN |
+                                        /* Open drain is disabled */
+                                        IOCON_PIO_OPENDRAIN_DI);
+    /* PORT1 PIN4 (coords: 1) is configured as PIO1_4 */
+    IOCON_PinMuxSet(IOCON, 0U, 15U, port0_pin15_config);
+
     const uint32_t port1_pin4_config = (/* Pin is configured as PIO1_4 */
                                         IOCON_PIO_FUNC0 |
                                         /* Selects pull-up function */
