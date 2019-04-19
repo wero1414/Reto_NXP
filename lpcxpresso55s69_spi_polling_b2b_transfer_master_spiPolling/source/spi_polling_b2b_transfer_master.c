@@ -1,10 +1,7 @@
 /*******************************************************************************
  * TODO:
- * 		- Agregar SS
- * 		- Agregar LED
- * 		- Agregar Timmer o delay
  * 		- Agregar AES hw
- * 		-
+ * 		- Agregar TrustedZone
  ******************************************************************************/
 
 
@@ -79,6 +76,7 @@ void AES_Calculate_Round_Key(unsigned char Round, unsigned char *Round_Key);
  * Variables
  ******************************************************************************/
 spi_master_config_t userConfig = {0};
+volatile uint32_t g_systickCounter;
 uint32_t srcFreq = 0;
 uint32_t i = 0;
 uint32_t err = 0;
@@ -87,6 +85,22 @@ uint16_t Frame_Counter_Tx = 0x0000;
 /*******************************************************************************
  * Code
  ******************************************************************************/
+
+void SysTick_Handler(void)
+{
+    if (g_systickCounter != 0U)
+    {
+        g_systickCounter--;
+    }
+}
+
+void SysTick_DelayTicks(uint32_t n)
+{
+    g_systickCounter = n;
+    while(g_systickCounter != 0U)
+    {
+    }
+}
 
 int main(void)
 {
@@ -101,6 +115,10 @@ int main(void)
     BOARD_BootClockFROHF96M();
     BOARD_InitDebugConsole();
 
+    if(SysTick_Config(SystemCoreClock / 1000U)){
+        while(1);
+    }
+
     /* Define the init structure for the output LED pin*/
     gpio_pin_config_t DIO0_config = {
         kGPIO_DigitalInput
@@ -113,12 +131,22 @@ int main(void)
     GPIO_PortInit(GPIO, BOARD_LED_PORT);
     GPIO_PortInit(GPIO, 0U);
 
-    GPIO_PinInit(GPIO, 0, 15, &led_config);
-    GPIO_PinInit(GPIO, 1, 9, &DIO0_config);
+    GPIO_PinInit(GPIO, 0, 15, &led_config); //SS
+    GPIO_PinInit(GPIO, 1, 9, &DIO0_config);	//DIO0
+    GPIO_PinInit(GPIO, 1, 10, &led_config);	//RST
     GPIO_PinInit(GPIO, BOARD_LED_PORT, BOARD_LED_PIN, &led_config);
-    GPIO_PinWrite(GPIO,1,4,false);
 
-    PRINTF("Master Start...\n\r");
+
+    GPIO_PinWrite(GPIO,1,4,false);  //Turn on LED
+    //Manual Reset of RFM95
+    GPIO_PinWrite(GPIO,1,10,true);
+    SysTick_DelayTicks(100);
+    GPIO_PinWrite(GPIO,1,10,false);
+    SysTick_DelayTicks(100);
+    GPIO_PinWrite(GPIO,1,10,true);
+    SysTick_DelayTicks(100);
+
+    PRINTF("Node Start...\n\r");
     /*
      * userConfig.enableLoopback = false;
      * userConfig.enableMaster = true;
@@ -137,27 +165,27 @@ int main(void)
     	PRINTF("SX1276 or RFM95 not detected'");
     	while(true);
     }
+
 	PRINTF("SX1276 or RFM95 detected and configured\n\r");
 
     GPIO_PinWrite(GPIO,1,4,true);
 
-    uint16_t temp;
-	uint8_t Data[2];
-	uint8_t Data_Length = 0x02;
-
-	temp = 50;
-	Data[0] = (temp >> 8) & 0xff;
-	Data[1] = temp & 0xff;
-
-	LORA_Send_Data(Data, Data_Length, Frame_Counter_Tx);
-	Frame_Counter_Tx++;
-	PRINTF("Dato enviado");
-	// reset sleep count
-	//sleep_count = 0;
-    //serialData=0;
-
     while (1){
+    	uint16_t temp;
+		uint8_t Data[2];
+		uint8_t Data_Length = 0x02;
 
+		temp = 50;
+		Data[0] = (temp >> 8) & 0xff;
+		Data[1] = temp & 0xff;
+
+		LORA_Send_Data(Data, Data_Length, Frame_Counter_Tx);
+		PRINTF("Data %d sended",Frame_Counter_Tx);
+		Frame_Counter_Tx++;
+		GPIO_PinWrite(GPIO,1,4,false);
+		SysTick_DelayTicks(4000);
+		GPIO_PinWrite(GPIO,1,4,true);
+		SysTick_DelayTicks(1000);
     }
 }
 
@@ -236,20 +264,15 @@ bool RFM_Init(void)
   RFM_Write(0x01,0x80);
   //Set RFM in Standby mode wait on mode ready
   RFM_Write(0x01,0x81);
-  /*
-  while (digitalRead(DIO5) == LOW)
-  {
-    Serial.print(".");
-  }*/
 
   //Set carrair frequency
   // 868.100 MHz / 61.035 Hz = 14222987 = 0xD9068B
-  // 904.400 Mhz / 61.035 Hz = 14866880 = 0xE2D9C0
+  // 904.400 Mhz / 61.035 Hz = 14866880 = 0xE219BF
   // 912.500 Mhz / 61.035 Hz = 14950438 = 0xE42026
   // 902.300 Mhz / 61.035 Hz = 14783321 = 0xE19359
-  RFM_Write(0x06,0xE1);
-  RFM_Write(0x07,0x93);
-  RFM_Write(0x08,0x59);
+  RFM_Write(0x06,0xE2);
+  RFM_Write(0x07,0x19);
+  RFM_Write(0x08,0xBF);
 
   //PA pin (minimal power)
   RFM_Write(0x09,0xFF);
@@ -357,7 +380,15 @@ void LORA_Send_Data(unsigned char *Data, unsigned char Data_Length, unsigned int
 
   //Add MIC length to RFM package length
   RFM_Package_Length = RFM_Package_Length + 4;
+  /*
+   * PRINTF("Data to send: ");
+  for(i = 0; i < RFM_Package_Length; i++)
+  {
 
+	  PRINTF("0x%x",RFM_Data[i]);
+  }
+  PRINTF("\n\r");
+  */
   //Send Package
   RFM_Send_Package(RFM_Data, RFM_Package_Length);
 }
@@ -382,15 +413,6 @@ void RFM_Send_Package(unsigned char *RFM_Tx_Package, unsigned char Package_Lengt
   RFM_Write(0x01,0x81);
   //Clear all interrupts
   RFM_Write(0x12, 0xFF);
-  /*
-  while (digitalRead(DIO5) == LOW)
-  {
-    Serial.print(".");
-  }*/
-
-  // mask all IRQs but TxDone
-  //RFM_Write(0x11, ~0x08);
-  //delay(10);
 
   //Change DIO mapping to TxDone
   //Switch DIO0 to TxDone
@@ -398,12 +420,12 @@ void RFM_Send_Package(unsigned char *RFM_Tx_Package, unsigned char Package_Lengt
 
   //Set carrier frequency
   // 868.100 MHz / 61.035 Hz = 14222987 = 0xD9068B
-  // 904.400 Mhz / 61.035 Hz = 14866880 = 0xE2D9C0
+  // 904.300 Mhz / 61.035 Hz = 14816089 = 0xE21359
   // 912.500 Mhz / 61.035 Hz = 14950438 = 0xE42026
   // 902.300 Mhz / 61.035 Hz = 14783321 = 0xE19359
   RFM_Write(0x06,0xE2);
-  RFM_Write(0x07,0xD9);
-  RFM_Write(0x08,0xC0);
+  RFM_Write(0x07,0x13);
+  RFM_Write(0x08,0x59);
 
   //SF7 BW 125 kHz
   RFM_Write(0x1E,0x74); //SF7 CRC On
@@ -423,11 +445,13 @@ void RFM_Send_Package(unsigned char *RFM_Tx_Package, unsigned char Package_Lengt
   //Set SPI pointer to start of Tx part in FiFo
   //RFM_Write(0x0D,RFM_Tx_Location);
   RFM_Write(0x0D,0x80); // hardcoded fifo location according RFM95 specs
+  PRINTF("FIFO Pointer: 0x%x \n\r",RFM_Read(0x0D));
 
   //Write Payload to FiFo
   for (i = 0;i < Package_Length; i++)
   {
-    RFM_Write(0x00,*RFM_Tx_Package);
+    //PRINTF("i=%d \n\r",i);
+	RFM_Write(0x00,*RFM_Tx_Package);
     RFM_Tx_Package++;
   }
 
@@ -437,17 +461,11 @@ void RFM_Send_Package(unsigned char *RFM_Tx_Package, unsigned char Package_Lengt
   while(GPIO_PinRead(GPIO,1,9)==0){
 	 PRINTF(".");
   }
-  /*
-   *
-   *
-  //Wait for TxDone
-  while(digitalRead(DIO0) == LOW){
-  }*/
 
-  PRINTF("Dato enviado TxDone: %d \n\r",RFM_Read(0x12));
+  RFM_Write(0x12, 0xFF);
+  //PRINTF("Dato enviado TxDone: %d \n\r",RFM_Read(0x12));
   //Serial.println();
   //Clear all RegIrqFlags
-  RFM_Write(0x12, 0xFF);
 }
 
 
