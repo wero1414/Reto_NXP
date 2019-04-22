@@ -54,8 +54,6 @@ typedef union
     unsigned value;
 } ahb_secure_fault_info_t;
 
-
-
 unsigned char NwkSkey[16] = { 0x44, 0x19, 0x4D, 0x01, 0xF3, 0x8C, 0x93, 0xCB, 0x19, 0x03, 0x51, 0x58, 0x03, 0x87, 0x7E, 0x67 };
 unsigned char AppSkey[16] = { 0x78, 0x90, 0x38, 0x01, 0x20, 0xA7, 0x70, 0x33, 0xBA, 0xEC, 0x0B, 0x26, 0x75, 0xF0, 0xE3, 0x09 };
 unsigned char DevAddr[4] = { 0x26, 0x02, 0x14, 0x2E };
@@ -65,7 +63,8 @@ unsigned char DevAddr[4] = { 0x26, 0x02, 0x14, 0x2E };
  * Prototypes
  ******************************************************************************/
 void HardFault_Handler (void);
-uint32_t GetTestCaseNumber(void);
+uint32_t GetTestCaseNumber(int a);
+uint32_t GetAppKey(void);
 
 
 
@@ -164,9 +163,16 @@ int main(void)
 /*!
  * @brief This function returns the SecureFault test case number selected through UART. .
  */
-uint32_t GetTestCaseNumber()
+uint32_t GetTestCaseNumber(int a)
 {
-    return testCaseNumber;
+	return DevAddr[a];
+    //return testCaseNumber;
+}
+
+
+uint32_t GetAppKey()
+{
+    return AppSkey;
 }
 
 /*!

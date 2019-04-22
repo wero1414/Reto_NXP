@@ -50,7 +50,9 @@ void SecureGPIO_Mask_NSE(uint32_t iomask, _Bool secure);
  *
  * @return             number of actual fault testcase
 */
-uint32_t GetTestCaseNumber_NSE(void);
+uint32_t GetTestCaseNumber_NSE(int a);
+
+uint32_t GetTestCaseKey_NSE(void);
 
 
 #endif /* _VENEER_TABLE_H_ */

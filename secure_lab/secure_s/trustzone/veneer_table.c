@@ -69,7 +69,13 @@ __attribute__((cmse_nonsecure_entry)) void SecureGPIO_Mask_NSE(uint32_t iomask, 
 }
 
 /* Non-secure callable (entry) function */
-__attribute__((cmse_nonsecure_entry)) uint32_t GetTestCaseNumber_NSE(void)
+__attribute__((cmse_nonsecure_entry)) uint32_t GetTestCaseNumber_NSE(int a)
 {
     return GetTestCaseNumber();
+}
+
+/* Non-secure callable (entry) function */
+__attribute__((cmse_nonsecure_entry)) uint32_t GetTestCaseKey_NSE(void)
+{
+    return GetAppKey();
 }

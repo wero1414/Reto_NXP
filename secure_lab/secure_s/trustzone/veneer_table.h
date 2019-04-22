@@ -52,7 +52,9 @@ void SecureGPIO_Mask_NSE(uint32_t iomask, _Bool secure);
  *
  * @return             number of actual fault test case
 */
-uint32_t GetTestCaseNumber_NSE(void);
+uint32_t GetTestCaseNumber_NSE(int a);
+
+uint32_t GetTestCaseKey_NSE(void);
 
 void Encrypt_Payload(unsigned char *Data, unsigned char Data_Length, unsigned int Frame_Counter, unsigned char Direction);
 void Calculate_MIC(unsigned char *Data, unsigned char *Final_MIC, unsigned char Data_Length, unsigned int Frame_Counter, unsigned char Direction);

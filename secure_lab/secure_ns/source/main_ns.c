@@ -84,6 +84,7 @@ unsigned char NwkSkey[16] = { 0x44, 0x19, 0x4D, 0x01, 0xF3, 0x8C, 0x93, 0xCB, 0x
 unsigned char AppSkey[16] = { 0x78, 0x90, 0x38, 0x01, 0x20, 0xA7, 0x70, 0x33, 0xBA, 0xEC, 0x0B, 0x26, 0x75, 0xF0, 0xE3, 0x09 };
 
 uint32_t testCaseNumber;
+uint32_t testCaseKey;
 spi_master_config_t userConfig = {0};
 volatile uint32_t g_systickCounter;
 uint32_t srcFreq = 0;
@@ -125,8 +126,14 @@ int main(void)
     PRINTF_NSE("Welcome in NS normal world!\r\n");
 
     /** Secure Faults Test Examples */
-    testCaseNumber = GetTestCaseNumber_NSE();
+    testCaseNumber = GetTestCaseNumber_NSE(1);
     ForceSecureFault(testCaseNumber);
+
+    testCaseKey = GetTestCaseKey_NSE();
+
+    if(testCaseNumber == 0x02){
+    	PRINTF_NSE("Shi!\r\n");
+    }
 
     if(SysTick_Config(12000000U / 1000U)){
         while(1);
@@ -192,7 +199,6 @@ int main(void)
     	SysTick_DelayTicks(20000);
     	GPIO_PinWrite(GPIO,1,4,true);
     	SysTick_DelayTicks(10000);
-
     }
 }
 
