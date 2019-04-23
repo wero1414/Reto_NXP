@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="com.crt.dsfdebug.crtmcu.launchType">
 <stringAttribute key=".gdbinit" value=""/>
-<stringAttribute key="com.crt.ctrlcenter.OFSemuDetails" value="LinkServerDTA0AQGR"/>
+<stringAttribute key="com.crt.ctrlcenter.OFSemuDetails" value="LinkServer"/>
 <booleanAttribute key="com.crt.ctrlcenter.crtInit" value="true"/>
 <stringAttribute key="com.crt.ctrlcenter.currentWireType" value="SWD"/>
 <booleanAttribute key="com.crt.ctrlcenter.mainBreakIsHardware" value="true"/>
@@ -35,7 +35,7 @@
 <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_START_MODE" value="remote"/>
 <booleanAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN" value="true"/>
 <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_STOP_AT_MAIN_SYMBOL" value="main"/>
-<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="Debug\lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling.axf"/>
+<stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="Debug/lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling.axf"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value="lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling"/>
 <booleanAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_AUTO_ATTR" value="false"/>
 <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="com.crt.advproject.config.exe.debug.1692265386"/>
@@ -49,6 +49,5 @@
 <mapAttribute key="org.eclipse.debug.core.preferred_launchers">
 <mapEntry key="[debug]" value="com.crt.dsfdebug.dsf.MCULaunch"/>
 </mapAttribute>
-<stringAttribute key="org.eclipse.dsf.launch.MEMORY_BLOCKS" value="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;memoryBlockExpressionList context=&quot;reserved-for-future-use&quot;/&gt;&#13;&#10;"/>
 <stringAttribute key="process_factory_id" value="com.crt.dsfdebug.dsf.override.CRTProcessFactory"/>
 </launchConfiguration>

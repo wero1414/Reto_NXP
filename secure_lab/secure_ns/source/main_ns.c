@@ -1,9 +1,3 @@
-/*
- * Copyright 2018 NXP
- *
- * SPDX-License-Identifier: BSD-3-Clause
- */
-
 #include "fsl_spi.h"
 #include "fsl_gpio.h"
 #include "fsl_device_registers.h"
@@ -125,16 +119,6 @@ int main(void)
 
     PRINTF_NSE("Welcome in NS normal world!\r\n");
 
-    /** Secure Faults Test Examples */
-    testCaseNumber = GetTestCaseNumber_NSE(1);
-    ForceSecureFault(testCaseNumber);
-
-    testCaseKey = GetTestCaseKey_NSE();
-
-    if(testCaseNumber == 0x02){
-    	PRINTF_NSE("Shi!\r\n");
-    }
-
     if(SysTick_Config(12000000U / 1000U)){
         while(1);
     }
@@ -158,6 +142,20 @@ int main(void)
 
     GPIO_PinWrite(GPIO,1,4,false);  //Turn on LED
     PRINTF_NSE("Node Start 1...\n\r");
+
+    for(int i=0;i<16;i++){
+    	if(GetNwkSkey_NSE(i)==AppSkey[i]){
+    		PRINTF_NSE("Ok \n\r");
+    	}
+    	else{
+    		PRINTF_NSE("ERROR \n\r");
+    		break;
+    	}
+
+    }
+
+
+
     //Manual Reset of RFM95
     GPIO_PinWrite(GPIO,1,10,true);
     SysTick_DelayTicks(100);
@@ -205,7 +203,6 @@ int main(void)
 void ForceSecureFault(uint32_t testCase)
 {
 	uint32_t *test_ptr;
-	funcptr_t func_ptr;
 	uint32_t test_value=0;
 
 	switch (testCase)

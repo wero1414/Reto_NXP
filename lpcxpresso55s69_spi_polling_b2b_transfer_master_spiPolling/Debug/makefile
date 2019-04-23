@@ -37,7 +37,7 @@ all: lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling.axf
 lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling.axf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
-	arm-none-eabi-gcc -nostdlib -L"C:\Users\eduardoContreras\Documents\MCUXpressoIDE_10.3.1_2233\workspace\Reto_NXP\lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling\libs" -Xlinker -Map="lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -T lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling_Debug.ld -o "lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -nostdlib -L"/Users/eduardocontreras/Documents/Electronic_Cats/Proyectos/Hw/Reto_NXP/lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling/libs" -Xlinker -Map="lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -T lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling_Debug.ld -o "lpcxpresso55s69_spi_polling_b2b_transfer_master_spiPolling.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build

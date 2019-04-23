@@ -45,18 +45,21 @@ void DbgConsole_Printf_NSE(char const * s);
 void SecureGPIO_Mask_NSE(uint32_t iomask, _Bool secure);
 
 /*!
- * @brief Entry function for GetTestCaseNumber(void)
+ * @brief Entry function for GetNwkSkey_NSE(int)
  *
- * This function retuns number of actual fault test case
- * This function is called from normal world only
+ * This function returns Network Session Key for LoRaWAN
  *
- * @return             number of actual fault test case
+ * @return             [a] of the key
 */
-uint32_t GetTestCaseNumber_NSE(int a);
+uint32_t GetNwkSkey_NSE(int);
 
-uint32_t GetTestCaseKey_NSE(void);
+/*!
+ * @brief Entry function for GetAppSkey_NSE(int)
+ *
+ * This function returns App Session Key for LoRaWAN
+ *
+ * @return             [a] of the key
+*/
+uint32_t GetAppSkey_NSE(int);
 
-void Encrypt_Payload(unsigned char *Data, unsigned char Data_Length, unsigned int Frame_Counter, unsigned char Direction);
-void Calculate_MIC(unsigned char *Data, unsigned char *Final_MIC, unsigned char Data_Length, unsigned int Frame_Counter, unsigned char Direction);
-void AES_Encrypt(unsigned char *Data, unsigned char *Key);
 #endif /* _VENEER_TABLE_H_ */

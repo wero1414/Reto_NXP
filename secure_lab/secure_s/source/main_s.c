@@ -63,9 +63,8 @@ unsigned char DevAddr[4] = { 0x26, 0x02, 0x14, 0x2E };
  * Prototypes
  ******************************************************************************/
 void HardFault_Handler (void);
-uint32_t GetTestCaseNumber(int a);
-uint32_t GetAppKey(void);
-
+uint32_t GetAppKey(int);
+uint32_t GetNwk(int);
 
 
 /*******************************************************************************
@@ -124,32 +123,9 @@ int main(void)
 
     /* Get non-secure reset handler */
     ResetHandler_ns = (funcptr_ns)(*((uint32_t *)((NON_SECURE_START) + 4U)));
-
-//    do
-//    {
-//    	PRINTF("\r\n---- Choose Secure Fault ----\r\n");
-//    	PRINTF("0 Continue without fault \r\n");
-//    	PRINTF("1 S ->NS  invalid transition \r\n");
-//    	PRINTF("2 NS->S   invalid entry point \r\n");
-//    	PRINTF("3 NS->S   illegal data access SAU Region 1 \r\n");
-//    	PRINTF("4 NS->S   invalid data access Secure Bus (AHB MPC - Secure RAM1 ) \r\n");
-//    	PRINTF("5 NS->NSC invalid input parameters  \r\n");
-//    	testCaseNumber = GETCHAR();
-//    	PUTCHAR(testCaseNumber);
-//    }while(testCaseNumber<'0' || testCaseNumber>'5');
-//    testCaseNumber -= '0';
     
     /* Call non-secure application */
     PRINTF("\r\nGoing to normal world.\r\n");
-
-    /* Test 1 S->NS invalid transition
-     * Direct jump to NS ResetHandler without
-     * a. Cleaning core registers
-     * b. NS most LSB address not cleared  */
-    if (testCaseNumber == FAULT_INV_S_TO_NS_TRANS)
-    {
-        __asm("BXNS %0" : : "r" (ResetHandler_ns));
-    }
 
     /* Jump to normal world (Correct way compare to Test 1) */
     ResetHandler_ns();
@@ -160,20 +136,16 @@ int main(void)
     }
 }
 
-/*!
- * @brief This function returns the SecureFault test case number selected through UART. .
- */
-uint32_t GetTestCaseNumber(int a)
-{
-	return DevAddr[a];
-    //return testCaseNumber;
+
+uint32_t GetNwk(int a){
+	return NwkSkey[a];
 }
 
-
-uint32_t GetAppKey()
+uint32_t GetAppKey(int a)
 {
-    return AppSkey;
+    return AppSkey[a];
 }
+
 
 /*!
  * @brief HardFault handler. This handler can called from both normal and secure world

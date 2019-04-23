@@ -38,7 +38,7 @@ all: secure_s.axf
 secure_s.axf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU Linker'
-	arm-none-eabi-gcc -nostdlib -L"C:\Users\eduardoContreras\Documents\MCUXpressoIDE_10.3.1_2233\workspace\Reto_NXP\secure_lab\secure_s\libs" -Xlinker --cmse-implib -Xlinker --out-implib=hello_world_s_CMSE_lib.o -Xlinker -Map="secure_s.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -T lpcxpresso55s69_hello_world_s_Debug.ld -Xlinker --out-implib="secure_s_CMSE_lib.o" -Xlinker --cmse-implib -o "secure_s.axf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-gcc -nostdlib -L"/Users/eduardocontreras/Documents/Electronic_Cats/Proyectos/Hw/Reto_NXP/secure_lab/secure_s/libs" -Xlinker --cmse-implib -Xlinker --out-implib=hello_world_s_CMSE_lib.o -Xlinker -Map="secure_s.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -T lpcxpresso55s69_hello_world_s_Debug.ld -Xlinker --out-implib="secure_s_CMSE_lib.o" -Xlinker --cmse-implib -o "secure_s.axf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 	$(MAKE) --no-print-directory post-build
