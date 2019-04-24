@@ -69,13 +69,13 @@ __attribute__((cmse_nonsecure_entry)) void SecureGPIO_Mask_NSE(uint32_t iomask, 
 }
 
 /* Non-secure callable (entry) function */
-__attribute__((cmse_nonsecure_entry)) uint32_t GetNwkSkey_NSE(int a)
+__attribute__((cmse_nonsecure_entry)) unsigned char GetNwkSkey_NSE(int a)
 {
     return GetNwk(a);
 }
 
 /* Non-secure callable (entry) function */
-__attribute__((cmse_nonsecure_entry)) uint32_t GetAppSkey_NSE(int a)
+__attribute__((cmse_nonsecure_entry)) unsigned char GetAppSkey_NSE(int a)
 {
     return GetAppKey(a);
 }

@@ -63,8 +63,8 @@ unsigned char DevAddr[4] = { 0x26, 0x02, 0x14, 0x2E };
  * Prototypes
  ******************************************************************************/
 void HardFault_Handler (void);
-uint32_t GetAppKey(int);
-uint32_t GetNwk(int);
+unsigned char GetAppKey(int);
+unsigned char GetNwk(int);
 
 
 /*******************************************************************************
@@ -137,11 +137,11 @@ int main(void)
 }
 
 
-uint32_t GetNwk(int a){
+unsigned char GetNwk(int a){
 	return NwkSkey[a];
 }
 
-uint32_t GetAppKey(int a)
+unsigned char GetAppKey(int a)
 {
     return AppSkey[a];
 }

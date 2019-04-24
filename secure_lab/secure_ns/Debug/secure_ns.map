@@ -1123,7 +1123,7 @@ END GROUP
                 0x0000000020033000                __top_Ram0 = 0x20033000
                 0x0000000020033000                __top_RAM = 0x20033000
 
-.text           0x0000000000010000     0x42d4
+.text           0x0000000000010000     0x42c0
  FILL mask 0xff
                 0x0000000000010000                __vectors_start__ = ABSOLUTE (.)
  *(SORT_BY_ALIGNMENT(.isr_vector))
@@ -1133,13 +1133,13 @@ END GROUP
                 0x0000000000010130                . = ALIGN (0x4)
                 0x0000000000010130                __section_table_start = .
                 0x0000000000010130                __data_section_table = .
-                0x0000000000010130        0x4 LONG 0x142d4 LOADADDR (.data)
+                0x0000000000010130        0x4 LONG 0x142c0 LOADADDR (.data)
                 0x0000000000010134        0x4 LONG 0x20008000 ADDR (.data)
-                0x0000000000010138        0x4 LONG 0x128 SIZEOF (.data)
+                0x0000000000010138        0x4 LONG 0x108 SIZEOF (.data)
                 0x000000000001013c                __data_section_table_end = .
                 0x000000000001013c                __bss_section_table = .
-                0x000000000001013c        0x4 LONG 0x20008128 ADDR (.bss)
-                0x0000000000010140        0x4 LONG 0x180 SIZEOF (.bss)
+                0x000000000001013c        0x4 LONG 0x20008108 ADDR (.bss)
+                0x0000000000010140        0x4 LONG 0x1a0 SIZEOF (.bss)
                 0x0000000000010144                __bss_section_table_end = .
                 0x0000000000010144                __section_table_end = .
  *(SORT_BY_ALIGNMENT(.after_vectors*))
@@ -1724,66 +1724,66 @@ END GROUP
                 0x0000000000013740       0x20 linker stubs
  *(SORT_BY_ALIGNMENT(.rodata) SORT_BY_ALIGNMENT(.rodata.*) SORT_BY_ALIGNMENT(.constdata) SORT_BY_ALIGNMENT(.constdata.*))
  *fill*         0x0000000000013760        0x0 ff
- .rodata        0x0000000000013760       0xee ./source/main_ns.o
- *fill*         0x000000000001384e        0x2 ff
+ .rodata        0x0000000000013760       0xda ./source/main_ns.o
+ *fill*         0x000000000001383a        0x2 ff
  .rodata.s_flexcommBaseAddrs
-                0x0000000000013850       0x24 ./drivers/fsl_flexcomm.o
+                0x000000000001383c       0x24 ./drivers/fsl_flexcomm.o
  .rodata.s_flexcommClocks
-                0x0000000000013874       0x12 ./drivers/fsl_flexcomm.o
- *fill*         0x0000000000013886        0x2 ff
+                0x0000000000013860       0x12 ./drivers/fsl_flexcomm.o
+ *fill*         0x0000000000013872        0x2 ff
  .rodata.s_flexcommResets
-                0x0000000000013888       0x24 ./drivers/fsl_flexcomm.o
- .rodata        0x00000000000138ac      0x220 ./drivers/fsl_flexcomm.o
+                0x0000000000013874       0x24 ./drivers/fsl_flexcomm.o
+ .rodata        0x0000000000013898      0x220 ./drivers/fsl_flexcomm.o
  .rodata.s_gpioClockName
-                0x0000000000013acc        0xc ./drivers/fsl_gpio.o
+                0x0000000000013ab8        0xc ./drivers/fsl_gpio.o
  .rodata.s_gpioResets
-                0x0000000000013ad8       0x18 ./drivers/fsl_gpio.o
- .rodata        0x0000000000013af0       0x3e ./drivers/fsl_gpio.o
- *fill*         0x0000000000013b2e        0x2 ff
- .rodata        0x0000000000013b30       0x55 ./drivers/fsl_reset.o
- *fill*         0x0000000000013b85        0x3 ff
- .rodata        0x0000000000013b88      0x6ee ./drivers/fsl_spi.o
- *fill*         0x0000000000014276        0x2 ff
+                0x0000000000013ac4       0x18 ./drivers/fsl_gpio.o
+ .rodata        0x0000000000013adc       0x3e ./drivers/fsl_gpio.o
+ *fill*         0x0000000000013b1a        0x2 ff
+ .rodata        0x0000000000013b1c       0x55 ./drivers/fsl_reset.o
+ *fill*         0x0000000000013b71        0x3 ff
+ .rodata        0x0000000000013b74      0x6ee ./drivers/fsl_spi.o
+ *fill*         0x0000000000014262        0x2 ff
  .rodata.s_spiBaseAddrs
-                0x0000000000014278       0x24 ./drivers/fsl_spi.o
+                0x0000000000014264       0x24 ./drivers/fsl_spi.o
  .rodata.__num_Ciob_streams
-                0x000000000001429c        0x4 /Applications/MCUXpressoIDE_10.3.1_2233/ide/plugins/com.nxp.mcuxpresso.tools.macosx_10.3.0.201811011841/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main/fpv5-sp/hard/libcr_nohost_nf.a(__ciob.o)
-                0x000000000001429c                __num_Ciob_streams
+                0x0000000000014288        0x4 /Applications/MCUXpressoIDE_10.3.1_2233/ide/plugins/com.nxp.mcuxpresso.tools.macosx_10.3.0.201811011841/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main/fpv5-sp/hard/libcr_nohost_nf.a(__ciob.o)
+                0x0000000000014288                __num_Ciob_streams
  .rodata.__assertion_failed.str1.1
-                0x00000000000142a0       0x15 /Applications/MCUXpressoIDE_10.3.1_2233/ide/plugins/com.nxp.mcuxpresso.tools.macosx_10.3.0.201811011841/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main/fpv5-sp/hard/libcr_nohost_nf.a(_cr_assert.o)
+                0x000000000001428c       0x15 /Applications/MCUXpressoIDE_10.3.1_2233/ide/plugins/com.nxp.mcuxpresso.tools.macosx_10.3.0.201811011841/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main/fpv5-sp/hard/libcr_nohost_nf.a(_cr_assert.o)
  .rodata._Csys_alloc.str1.1
-                0x00000000000142b5       0x18 /Applications/MCUXpressoIDE_10.3.1_2233/ide/plugins/com.nxp.mcuxpresso.tools.macosx_10.3.0.201811011841/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main/fpv5-sp/hard/libcr_c.a(alloc.o)
+                0x00000000000142a1       0x18 /Applications/MCUXpressoIDE_10.3.1_2233/ide/plugins/com.nxp.mcuxpresso.tools.macosx_10.3.0.201811011841/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main/fpv5-sp/hard/libcr_c.a(alloc.o)
  .rodata._initio.str1.1
-                0x00000000000142cd        0x4 /Applications/MCUXpressoIDE_10.3.1_2233/ide/plugins/com.nxp.mcuxpresso.tools.macosx_10.3.0.201811011841/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main/fpv5-sp/hard/libcr_c.a(initio.o)
-                0x00000000000142d4                . = ALIGN (0x4)
- *fill*         0x00000000000142d1        0x3 ff
+                0x00000000000142b9        0x4 /Applications/MCUXpressoIDE_10.3.1_2233/ide/plugins/com.nxp.mcuxpresso.tools.macosx_10.3.0.201811011841/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v8-m.main/fpv5-sp/hard/libcr_c.a(initio.o)
+                0x00000000000142c0                . = ALIGN (0x4)
+ *fill*         0x00000000000142bd        0x3 ff
 
-.glue_7         0x00000000000142d4        0x0
- .glue_7        0x00000000000142d4        0x0 linker stubs
+.glue_7         0x00000000000142c0        0x0
+ .glue_7        0x00000000000142c0        0x0 linker stubs
 
-.glue_7t        0x00000000000142d4        0x0
- .glue_7t       0x00000000000142d4        0x0 linker stubs
+.glue_7t        0x00000000000142c0        0x0
+ .glue_7t       0x00000000000142c0        0x0 linker stubs
 
-.vfp11_veneer   0x00000000000142d4        0x0
- .vfp11_veneer  0x00000000000142d4        0x0 linker stubs
+.vfp11_veneer   0x00000000000142c0        0x0
+ .vfp11_veneer  0x00000000000142c0        0x0 linker stubs
 
-.v4_bx          0x00000000000142d4        0x0
- .v4_bx         0x00000000000142d4        0x0 linker stubs
+.v4_bx          0x00000000000142c0        0x0
+ .v4_bx         0x00000000000142c0        0x0 linker stubs
 
-.iplt           0x00000000000142d4        0x0
- .iplt          0x00000000000142d4        0x0 ./startup/startup_lpc55s69_cm33_core0.o
+.iplt           0x00000000000142c0        0x0
+ .iplt          0x00000000000142c0        0x0 ./startup/startup_lpc55s69_cm33_core0.o
 
-.rel.dyn        0x00000000000142d4        0x0
- .rel.iplt      0x00000000000142d4        0x0 ./startup/startup_lpc55s69_cm33_core0.o
+.rel.dyn        0x00000000000142c0        0x0
+ .rel.iplt      0x00000000000142c0        0x0 ./startup/startup_lpc55s69_cm33_core0.o
 
 .ARM.extab
  *(SORT_BY_ALIGNMENT(.ARM.extab*) SORT_BY_ALIGNMENT(.gnu.linkonce.armextab.*))
-                0x00000000000142d4                __exidx_start = .
+                0x00000000000142c0                __exidx_start = .
 
 .ARM.exidx
  *(SORT_BY_ALIGNMENT(.ARM.exidx*) SORT_BY_ALIGNMENT(.gnu.linkonce.armexidx.*))
-                0x00000000000142d4                __exidx_end = .
-                0x00000000000142d4                _etext = .
+                0x00000000000142c0                __exidx_end = .
+                0x00000000000142c0                _etext = .
 
 .uninit_RESERVED
                 0x0000000020008000        0x0
@@ -1791,7 +1791,7 @@ END GROUP
                 0x0000000020008000                . = ALIGN (0x4)
                 0x0000000020008000                _end_uninit_RESERVED = .
 
-.data           0x0000000020008000      0x128 load address 0x00000000000142d4
+.data           0x0000000020008000      0x108 load address 0x00000000000142c0
  FILL mask 0xff
                 0x0000000020008000                _data = .
  *(SORT_BY_ALIGNMENT(vtable))
@@ -1799,23 +1799,23 @@ END GROUP
  *(SORT_BY_ALIGNMENT(.data*))
  .data.S_Table  0x0000000020008000      0x100 ./source/main_ns.o
                 0x0000000020008000                S_Table
- .data.NwkSkey  0x0000000020008100       0x10 ./source/main_ns.o
-                0x0000000020008100                NwkSkey
- .data.AppSkey  0x0000000020008110       0x10 ./source/main_ns.o
-                0x0000000020008110                AppSkey
- .data.DevAddr  0x0000000020008120        0x4 ./source/main_ns.o
-                0x0000000020008120                DevAddr
+ .data.DevAddr  0x0000000020008100        0x4 ./source/main_ns.o
+                0x0000000020008100                DevAddr
  .data.s_Ext_Clk_Freq
-                0x0000000020008124        0x4 ./drivers/fsl_clock.o
-                0x0000000020008128                . = ALIGN (0x4)
-                0x0000000020008128                _edata = .
+                0x0000000020008104        0x4 ./drivers/fsl_clock.o
+                0x0000000020008108                . = ALIGN (0x4)
+                0x0000000020008108                _edata = .
 
-.igot.plt       0x0000000020008128        0x0 load address 0x00000000000143fc
- .igot.plt      0x0000000020008128        0x0 ./startup/startup_lpc55s69_cm33_core0.o
+.igot.plt       0x0000000020008108        0x0 load address 0x00000000000143c8
+ .igot.plt      0x0000000020008108        0x0 ./startup/startup_lpc55s69_cm33_core0.o
 
-.bss            0x0000000020008128      0x180 load address 0x00000000000143fc
-                0x0000000020008128                _bss = .
+.bss            0x0000000020008108      0x1a0 load address 0x00000000000143c8
+                0x0000000020008108                _bss = .
  *(SORT_BY_ALIGNMENT(.bss*))
+ .bss.NwkSkey   0x0000000020008108       0x10 ./source/main_ns.o
+                0x0000000020008108                NwkSkey
+ .bss.AppSkey   0x0000000020008118       0x10 ./source/main_ns.o
+                0x0000000020008118                AppSkey
  .bss.userConfig
                 0x0000000020008128       0x18 ./source/main_ns.o
                 0x0000000020008128                userConfig
@@ -1861,14 +1861,14 @@ END GROUP
                 0x00000000200082a8                _ebss = .
                 [!provide]                        PROVIDE (end = .)
 
-.noinit         0x00000000200082a8        0x0 load address 0x00000000000143fc
+.noinit         0x00000000200082a8        0x0 load address 0x00000000000143c8
                 0x00000000200082a8                _noinit = .
  *(SORT_BY_ALIGNMENT(.noinit*))
                 0x00000000200082a8                . = ALIGN (0x4)
                 0x00000000200082a8                _end_noinit = .
                 0x0000000000001000                _HeapSize = 0x1000
 
-.heap           0x00000000200082a8     0x1000 load address 0x00000000000143fc
+.heap           0x00000000200082a8     0x1000 load address 0x00000000000143c8
                 0x00000000200082a8                _pvHeapStart = .
                 0x00000000200092a8                . = (. + _HeapSize)
  *fill*         0x00000000200082a8     0x1000 
@@ -1877,7 +1877,7 @@ END GROUP
                 0x0000000000001000                _StackSize = 0x1000
 
 .heap2stackfill
-                0x00000000200092a8     0x1000 load address 0x00000000000143fc
+                0x00000000200092a8     0x1000 load address 0x00000000000143c8
                 0x000000002000a2a8                . = (. + _StackSize)
  *fill*         0x00000000200092a8     0x1000 
 
@@ -1887,8 +1887,8 @@ END GROUP
                 0x0000000020033000                _vStackTop = (. + _StackSize)
                 0xffffffffdff6c5e2                PROVIDE (__valid_user_code_checksum = (0x0 - ((((((_vStackTop + (ResetISR + 0x1)) + (NMI_Handler + 0x1)) + (HardFault_Handler + 0x1)) + (DEFINED (MemManage_Handler)?MemManage_Handler:0x0 + 0x1)) + (DEFINED (BusFault_Handler)?BusFault_Handler:0x0 + 0x1)) + (DEFINED (UsageFault_Handler)?UsageFault_Handler:0x0 + 0x1))))
                 0x0000000000010000                _image_start = LOADADDR (.text)
-                0x00000000000143fc                _image_end = (LOADADDR (.data) + SIZEOF (.data))
-                0x00000000000043fc                _image_size = (_image_end - _image_start)
+                0x00000000000143c8                _image_end = (LOADADDR (.data) + SIZEOF (.data))
+                0x00000000000043c8                _image_size = (_image_end - _image_start)
 OUTPUT(secure_ns.axf elf32-littlearm)
 
 .debug_info     0x0000000000000000     0xe0a9
@@ -1939,15 +1939,15 @@ OUTPUT(secure_ns.axf elf32-littlearm)
  .debug_ranges  0x00000000000006e0       0x20 ./drivers/fsl_reset.o
  .debug_ranges  0x0000000000000700       0xf0 ./drivers/fsl_spi.o
 
-.debug_line     0x0000000000000000     0x2d2f
+.debug_line     0x0000000000000000     0x2d31
  .debug_line    0x0000000000000000      0x50c ./startup/startup_lpc55s69_cm33_core0.o
- .debug_line    0x000000000000050c      0x7fc ./source/main_ns.o
- .debug_line    0x0000000000000d08      0xac3 ./drivers/fsl_clock.o
- .debug_line    0x00000000000017cb      0x37f ./drivers/fsl_flexcomm.o
- .debug_line    0x0000000000001b4a      0x229 ./drivers/fsl_gpio.o
- .debug_line    0x0000000000001d73      0x5fd ./drivers/fsl_pint.o
- .debug_line    0x0000000000002370      0x20a ./drivers/fsl_reset.o
- .debug_line    0x000000000000257a      0x7b5 ./drivers/fsl_spi.o
+ .debug_line    0x000000000000050c      0x7fe ./source/main_ns.o
+ .debug_line    0x0000000000000d0a      0xac3 ./drivers/fsl_clock.o
+ .debug_line    0x00000000000017cd      0x37f ./drivers/fsl_flexcomm.o
+ .debug_line    0x0000000000001b4c      0x229 ./drivers/fsl_gpio.o
+ .debug_line    0x0000000000001d75      0x5fd ./drivers/fsl_pint.o
+ .debug_line    0x0000000000002372      0x20a ./drivers/fsl_reset.o
+ .debug_line    0x000000000000257c      0x7b5 ./drivers/fsl_spi.o
 
 .debug_str      0x0000000000000000     0x6718
  .debug_str     0x0000000000000000      0x7aa ./startup/startup_lpc55s69_cm33_core0.o

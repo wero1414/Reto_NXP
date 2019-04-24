@@ -51,7 +51,7 @@ void SecureGPIO_Mask_NSE(uint32_t iomask, _Bool secure);
  *
  * @return             [a] of the key
 */
-uint32_t GetNwkSkey_NSE(int);
+unsigned char GetNwkSkey_NSE(int);
 
 /*!
  * @brief Entry function for GetAppSkey_NSE(int)
@@ -60,6 +60,6 @@ uint32_t GetNwkSkey_NSE(int);
  *
  * @return             [a] of the key
 */
-uint32_t GetAppSkey_NSE(int);
+unsigned char GetAppSkey_NSE(int);
 
 #endif /* _VENEER_TABLE_H_ */
